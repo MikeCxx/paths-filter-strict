@@ -1,6 +1,6 @@
-name: 'Paths Changes Filter'
+name: 'Paths Changes Filter Strictly'
 description: 'Execute your workflow steps only if relevant files are modified.'
-author: 'Michal Dorner <dorner.michal@gmail.com>'
+author: 'Mikeccx <caoxing@ones.cn>'
 inputs:
   token:
     description: 'GitHub Access Token'
