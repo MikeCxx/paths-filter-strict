@@ -62,7 +62,7 @@ export class Filter {
   }
 
   private isMatch(file: File, patterns: FilterRuleItem[]): boolean {
-    return patterns.some(
+    return patterns.every(
       rule => (rule.status === undefined || rule.status.includes(file.status)) && rule.isMatch(file.filename)
     )
   }
