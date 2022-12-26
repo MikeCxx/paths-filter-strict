@@ -85,7 +85,7 @@ class Filter {
         return result;
     }
     isMatch(file, patterns) {
-        return patterns.some(rule => (rule.status === undefined || rule.status.includes(file.status)) && rule.isMatch(file.filename));
+        return patterns.every(rule => (rule.status === undefined || rule.status.includes(file.status)) && rule.isMatch(file.filename));
     }
     parseFilterItemYaml(item) {
         if (Array.isArray(item)) {
