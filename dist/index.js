@@ -52,6 +52,8 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Filter = void 0;
 const jsyaml = __importStar(__nccwpck_require__(1917));
 const picomatch_1 = __importDefault(__nccwpck_require__(8569));
+// new add
+const core = __importStar(__nccwpck_require__(2186));
 // Minimatch options used in all matchers
 const MatchOptions = {
     dot: true
@@ -82,9 +84,12 @@ class Filter {
         for (const [key, patterns] of Object.entries(this.rules)) {
             result[key] = files.filter(file => this.isMatch(file, patterns));
         }
+        core.info(`result is ${result}`);
         return result;
     }
     isMatch(file, patterns) {
+        core.info(`file is ${file}`);
+        core.info(`patterns is ${patterns}`);
         return patterns.every(rule => (rule.status === undefined || rule.status.includes(file.status)) && rule.isMatch(file.filename));
     }
     parseFilterItemYaml(item) {
