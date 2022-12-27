@@ -82,16 +82,23 @@ class Filter {
     match(files) {
         const result = {};
         for (const [key, patterns] of Object.entries(this.rules)) {
-            result[key] = files.filter(file => this.isMatch(file, patterns));
+            // result[key] = files.filter(file => this.isMatch(file, patterns))
+            let fileTmp = files;
+            patterns.forEach((pat) => {
+                fileTmp = fileTmp.filter((file) => (pat.status === undefined || pat.status.includes(file.status)) && !pat.isMatch(file.filename));
+            });
+            result[key] = fileTmp;
         }
         core.info(`result is ${JSON.stringify(result)}`);
         return result;
     }
-    isMatch(file, patterns) {
-        core.info(`file is ${file.filename}`);
-        core.info(`patterns is ${JSON.stringify(patterns)}`);
-        return patterns.every(rule => (rule.status === undefined || rule.status.includes(file.status)) && rule.isMatch(file.filename));
-    }
+    // private isMatch(file: File, patterns: FilterRuleItem[]): boolean {
+    //   core.info(`file is ${file.filename}`)
+    //   core.info(`patterns is ${JSON.stringify(patterns)}`)
+    //   return patterns.every(
+    //     rule => (rule.status === undefined || rule.status.includes(file.status)) && rule.isMatch(file.filename)
+    //   )
+    // }
     parseFilterItemYaml(item) {
         if (Array.isArray(item)) {
             return flat(item.map(i => this.parseFilterItemYaml(i)));
