@@ -218,7 +218,7 @@ function exportResults(results: FilterResults, format: ExportFormat): void {
   const changes = []
   for (const [key, files] of Object.entries(results)) {
     const value = files.length > 0
-    core.startGroup(`Filter ${key} = ${value}`)
+    core.startGroup(`Filter ${key} = ${!value}`)
     if (files.length > 0) {
       changes.push(key)
       core.info('Matching files:')
