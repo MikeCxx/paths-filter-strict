@@ -52,8 +52,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Filter = void 0;
 const jsyaml = __importStar(__nccwpck_require__(1917));
 const picomatch_1 = __importDefault(__nccwpck_require__(8569));
-// new add
-const core = __importStar(__nccwpck_require__(2186));
 // Minimatch options used in all matchers
 const MatchOptions = {
     dot: true
@@ -82,14 +80,12 @@ class Filter {
     match(files) {
         const result = {};
         for (const [key, patterns] of Object.entries(this.rules)) {
-            // result[key] = files.filter(file => this.isMatch(file, patterns))
             let fileTmp = files;
             patterns.forEach((pat) => {
                 fileTmp = fileTmp.filter((file) => (pat.status === undefined || pat.status.includes(file.status)) && !pat.isMatch(file.filename));
             });
             result[key] = fileTmp;
         }
-        core.info(`result is ${JSON.stringify(result)}`);
         return result;
     }
     // private isMatch(file: File, patterns: FilterRuleItem[]): boolean {
@@ -701,7 +697,7 @@ function exportResults(results, format) {
         else {
             core.info('Matching files: none');
         }
-        core.setOutput(key, value);
+        core.setOutput(key, !value);
         core.setOutput(`${key}_count`, files.length);
         if (format !== 'none') {
             const filesValue = serializeExport(files, format);

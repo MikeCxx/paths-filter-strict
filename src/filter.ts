@@ -58,14 +58,12 @@ export class Filter {
   match(files: File[]): FilterResults {
     const result: FilterResults = {}
     for (const [key, patterns] of Object.entries(this.rules)) {
-      // result[key] = files.filter(file => this.isMatch(file, patterns))
       let fileTmp = files
       patterns.forEach((pat) => {
         fileTmp = fileTmp.filter((file) => (pat.status === undefined || pat.status.includes(file.status)) && !pat.isMatch(file.filename))
       })
       result[key] = fileTmp
     }
-    core.info(`result is ${JSON.stringify(result)}`)
     return result
   }
 
