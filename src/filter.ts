@@ -60,13 +60,13 @@ export class Filter {
     for (const [key, patterns] of Object.entries(this.rules)) {
       result[key] = files.filter(file => this.isMatch(file, patterns))
     }
-    core.info(`result is ${result}`)
+    core.info(`result is ${JSON.stringify(result)}`)
     return result
   }
 
   private isMatch(file: File, patterns: FilterRuleItem[]): boolean {
-    core.info(`file is ${file}`)
-    core.info(`patterns is ${patterns}`)
+    core.info(`file is ${file.filename}`)
+    core.info(`patterns is ${JSON.stringify(patterns)}`)
     return patterns.every(
       rule => (rule.status === undefined || rule.status.includes(file.status)) && rule.isMatch(file.filename)
     )
