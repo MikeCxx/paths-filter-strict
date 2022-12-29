@@ -1,4 +1,4 @@
-# Paths Changes Filter
+# Paths Changes Filter Strictly
 
 [GitHub Action](https://github.com/features/actions) that enables conditional execution of workflow steps and jobs, based on the files modified by pull request, on a feature
 branch, or by the recently pushed commits.
@@ -7,11 +7,11 @@ Run slow tasks like integration tests or deployments only for changed components
 GitHub workflows built-in [path filters](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestpaths)
 don't allow this because they don't work on a level of individual jobs or steps.
 
+This is a fork of dorny/paths-filter that adds the feature of strict limit the path. The reason behind forking is that original project is dormant.
+
 **Real world usage examples:**
 
-- [sentry.io](https://sentry.io/) - [backend.yml](https://github.com/getsentry/sentry/blob/2ebe01feab863d89aa7564e6d243b6d80c230ddc/.github/workflows/backend.yml#L36)
-- [GoogleChrome/web.dev](https://web.dev/) - [lint-workflow.yml](https://github.com/GoogleChrome/web.dev/blob/3a57b721e7df6fc52172f676ca68d16153bda6a3/.github/workflows/lint-workflow.yml#L26)
-- [blog post Configuring python linting to be part of CI/CD using GitHub actions](https://dev.to/freshbooks/configuring-python-linting-to-be-part-of-cicd-using-github-actions-1731#what-files-does-it-run-against) - [py_linter.yml](https://github.com/iamtodor/demo-github-actions-python-linter-configuration/blob/main/.github/workflows/py_linter.yml#L31)
+- [open-docs](https://github.com/MikeCxx/docsTest) - [backend.yml](https://github.com/MikeCxx/docsTest/blob/main/.github/workflows/pr.yml#L22)
 
 ## Supported workflows
 
@@ -186,6 +186,7 @@ jobs:
             - 'frontend/**'
 
     # run only if 'backend' files were changed
+    # the difference between the before is that only `backend/**` changed without any other dir changes the result will be `true`.
     - name: backend tests
       if: steps.filter.outputs.backend == 'true'
       run: ...
